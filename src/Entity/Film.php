@@ -43,9 +43,15 @@ class Film
      */
     private $director;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Genre", inversedBy="films")
+     */
+    private $genres;
+
     public function __construct()
     {
         $this->actors = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,6 +129,32 @@ class Film
     public function setDirector(?director $director): self
     {
         $this->director = $director;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        if ($this->genres->contains($genre)) {
+            $this->genres->removeElement($genre);
+        }
 
         return $this;
     }

@@ -19,6 +19,12 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
+    public function getFilms()
+    {
+        $films = $this->getDoctrine()->getRepository()->find();
+        return $films;
+    }
+
     // /**
     //  * @return Film[] Returns an array of Film objects
     //  */
